@@ -20,6 +20,7 @@
             <th style = "font-family: sans-serif;" > Color </th>
             <th style = "font-family: sans-serif;" > SKU </th>
             <th style = "font-family: sans-serif;" > Proveedor </th>
+            <th style = "font-family: sans-serif;" > Foto </th>
             <th style = "font-family: sans-serif;" > Opciones </th>
         </tr>
         {% for product in product_list %}
@@ -29,13 +30,18 @@
             <td> {{product.product_color}}</td>
             <td> {{product.product_sku}}</td>
             <td> {{product.vendor}}</td>
+            {% if product.picture %}
+            <td> <img src= "{{product.picture.url}}" width="150" height="200"></td>
+            {% else %}
+            <td> Sin Foto</td>
+            {% endif %}
             <td><a href="{% url 'deleteproduct' product.id %}">Borrar Producto</a></td>
         </tr>
         {%endfor%}
     </table>
 
     <h2 style="font-size: 20px; font-family: sans-serif; color:navy;"> Crear un Producto </h2>
-    <form action = "" method = "post">
+    <form action = "" method = "post" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
             <tr> 
@@ -57,6 +63,10 @@
             <tr>
                 <td style="font-size: 15px; font-family: sans-serif" >Proveedor</td>
                 <td>{{product_form.vendor}}</td>
+            </tr>
+            <tr>
+                <td style="font-size: 15px; font-family: sans-serif" >Foto</td>
+                <td>{{product_form.picture}}</td>
             </tr>
         </table>
         <br>
